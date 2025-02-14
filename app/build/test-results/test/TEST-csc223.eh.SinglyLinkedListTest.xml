@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="csc223.eh.SinglyLinkedListTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2025-02-14T02:22:17" hostname="EMILY" time="0.02">
+  <properties/>
+  <testcase name="testClear()" classname="csc223.eh.SinglyLinkedListTest" time="0.002"/>
+  <testcase name="testToString()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testContains()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testGetFirstAndLast()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testGetByIndex()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testReverse()" classname="csc223.eh.SinglyLinkedListTest" time="0.002"/>
+  <testcase name="testInsert()" classname="csc223.eh.SinglyLinkedListTest" time="0.0"/>
+  <testcase name="testIndexOf()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testIsEmpty()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <testcase name="testRemove()" classname="csc223.eh.SinglyLinkedListTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

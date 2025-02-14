@@ -11,4 +11,4 @@ plugins {
 }
 
 rootProject.name = 'CSC223-EH'
-include('app')
+include 'app'

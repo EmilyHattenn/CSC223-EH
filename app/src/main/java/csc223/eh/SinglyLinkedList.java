@@ -1,8 +1,7 @@
 package csc223.eh;
 
-
-
 public class SinglyLinkedList implements LinkedList {
+
     protected Node head;
     protected int size;
 
@@ -11,15 +10,17 @@ public class SinglyLinkedList implements LinkedList {
         this.size = 0;
     }
 
-    
+    @Override
     public void insert(char item) {
 
         // Create a New Node
         Node newNode = new Node(item);
+
         // Update the head pointer of the current node
         if (head == null) {
             head = newNode;
         } else { 
+            // Travsere to the Last Node
             Node current = head;
             while (current.next != null) {
                 // Iterate through the Linked List
@@ -33,6 +34,7 @@ public class SinglyLinkedList implements LinkedList {
     }
 
   
+    @Override
     public void remove(char item) {
 
         // Check if list is empty
@@ -60,14 +62,14 @@ public class SinglyLinkedList implements LinkedList {
         
     }
 
-    
+    @Override
     public char getFirst() {
-        return (head != null) ? head.data : '☠';
+        return (head != null) ? head.data : 'x';
     }
 
-  
+    @Override
     public char getLast() {
-        if (head == null) return '☠';
+        if (head == null) return 'x';
         Node current = head;
         while (current.next != null) {
             current = current.next;
@@ -75,9 +77,9 @@ public class SinglyLinkedList implements LinkedList {
         return current.data;
     }
 
-
+    @Override
     public char get(int index) {
-        if (index < 0 || index >= size) return '☠';
+        if (index < 0 || index >= size) return 'x';
         Node current = head;
         for (int i = 0; i < index; i++) {
             current = current.next;
@@ -85,23 +87,23 @@ public class SinglyLinkedList implements LinkedList {
         return current.data;
     }
 
-  
+    @Override
     public int size() {
         return size;
     }
 
-  
+    @Override
     public boolean isEmpty() {
         return head == null;
     }
 
-
+    @Override
     public void clear() {
         head = null;
         size = 0;
     }
 
- 
+    @Override
     public boolean contains(char item) {
         Node current = head;
         while (current != null) {
@@ -116,7 +118,7 @@ public class SinglyLinkedList implements LinkedList {
         return false;
     }
 
- 
+    @Override
     public int indexOf(char item) {
 
         Node current = head;
@@ -132,10 +134,11 @@ public class SinglyLinkedList implements LinkedList {
         return -1;
     }
 
-
+    @Override
     public int lastIndexOf(char item) {
         Node current = head;
-        int index = 0, lastIndex = -1;
+        int index = 0;
+        int lastIndex = -1;
         while (current != null) {
             if (current.data == item) lastIndex = index;
             current = current.next;
@@ -144,14 +147,13 @@ public class SinglyLinkedList implements LinkedList {
         return lastIndex;
     }
 
-
+    @Override
     public void reverse() {
         Node prev = null;
         Node current = head;
-        Node next = null;
 
         while (current != null) {
-            next = current.next;
+            Node next = current.next;
             current.next = prev;
             prev = current;
             current = next;
@@ -159,6 +161,7 @@ public class SinglyLinkedList implements LinkedList {
         head = prev;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Node current = head;

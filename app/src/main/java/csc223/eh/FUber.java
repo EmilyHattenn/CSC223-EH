@@ -1,3 +1,5 @@
+package csc223.eh;
+
 public class FUber {
 
     public static float euclidean(float x1, float y1, float x2, float y2) {

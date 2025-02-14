@@ -1,13 +1,15 @@
+package csc223.eh;
+
 import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
     
     // Attributes
-    private char[][] board;
+    private final char[][] board;
     private char player;
-    private Scanner input;
-    private Random random;
+    private final Scanner input;
+    private final Random random;
 
     // Constructor
     public TicTacToe() {
@@ -135,7 +137,6 @@ public class TicTacToe {
             printBoard();
         }
         endGame();
-        input.close();
     }
 
     // Main method to run the game

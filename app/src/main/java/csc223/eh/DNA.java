@@ -1,3 +1,4 @@
+package csc223.eh;
 
 public class DNA {
 
@@ -7,20 +8,19 @@ public class DNA {
         int countC = 0;
         int countG = 0;
         int countT = 0;
-
-        for (int i=0; i < dna.length(); i++) {
-            if (dna.charAt(i) == 'A'){
-                countA++;
-            } else if (dna.charAt(i) == 'C') {
-                countC++;
-            } else if (dna.charAt(i) == 'G') {
-                countG++;
-            } else if (dna.charAt(i) == 'T') {
-                countT++;
+    
+        for (int i = 0; i < dna.length(); i++) {
+            switch (dna.charAt(i)) {
+                case 'A' -> countA++;
+                case 'C' -> countC++;
+                case 'G' -> countG++;
+                case 'T' -> countT++;
+                default -> {
+                }
             }
-            
-        }
-
+            // Handle unexpected characters if necessary
+                    }
+    
         return countA + " " + countC + " " + countG + " " + countT;
     }
 
@@ -31,16 +31,15 @@ public class DNA {
     public static String reverseComplement(String dna) {
         String nDNA = " ";
         for (int i=dna.length() - 1; i >= 0; i--) {
-                if (dna.charAt(i) == 'T') {
-                    nDNA += 'A';
-                } else if (dna.charAt(i) == 'A') {
-                    nDNA += 'T';
-                } else if (dna.charAt(i) == 'C') {
-                    nDNA += 'G';
-                } else if (dna.charAt(i) == 'G') {
-                    nDNA += 'C';
+            switch (dna.charAt(i)) {
+                case 'T' -> nDNA += 'A';
+                case 'A' -> nDNA += 'T';
+                case 'C' -> nDNA += 'G';
+                case 'G' -> nDNA += 'C';
+                default -> {
                 }
             }
+        }
             return nDNA;
     }
 

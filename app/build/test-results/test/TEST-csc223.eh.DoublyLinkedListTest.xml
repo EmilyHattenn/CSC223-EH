@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="csc223.eh.DoublyLinkedListTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2025-02-14T02:22:17" hostname="EMILY" time="0.022">
+  <properties/>
+  <testcase name="testEmptyList()" classname="csc223.eh.DoublyLinkedListTest" time="0.008"/>
+  <testcase name="testRemoveNonExistentElement()" classname="csc223.eh.DoublyLinkedListTest" time="0.004"/>
+  <testcase name="testRemoveMiddle()" classname="csc223.eh.DoublyLinkedListTest" time="0.001"/>
+  <testcase name="testRemoveHead()" classname="csc223.eh.DoublyLinkedListTest" time="0.001"/>
+  <testcase name="testRemoveTail()" classname="csc223.eh.DoublyLinkedListTest" time="0.001"/>
+  <testcase name="testInsert()" classname="csc223.eh.DoublyLinkedListTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,15 +1,18 @@
+package csc223.eh;
+
 import java.util.Scanner;
 
 public class WordGuess implements Game {
     
     // Attributes
     private final String word = "bride";
-    private char[] guessedWord;
-    private int maxWrongGuess = 5;
+    private final char[] guessedWord;
+    private final int maxWrongGuess = 5;
     private int attemptsLeft = 5;
     private boolean isGameWon = false;
 
-    // Methods
+    
+    // Constructor
     public WordGuess() {
         guessedWord = new char[word.length()];
         for (int i = 0; i < word.length(); i++) {
@@ -17,6 +20,8 @@ public class WordGuess implements Game {
         }
     }  
 
+    // Methods
+    @Override
     public void startGame() {
         System.out.println("Welcome to Word Guess!");
         System.out.println("Try to guess the word one letter at a time or the entire word.");
@@ -26,6 +31,7 @@ public class WordGuess implements Game {
     }
 
 
+    @Override
     public void printBoard() {
         System.out.print("Word: ");
         for (char c : guessedWord) {
@@ -35,19 +41,23 @@ public class WordGuess implements Game {
     }
 
 
-    public void takeTurn() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Guess the letter or the Entire word:");
+    @Override
+    public void takeTurn(Scanner input) {  // Pass Scanner as a parameter
+        System.out.println("Guess the letter or the entire word:");
         String guess = input.nextLine().toLowerCase();
 
-        if  (guess.length() == 1) {
+        if (guess.length() == 1) {
             char guessedChar = guess.charAt(0);
-            if (word.contains(guess)) {
+            if (word.contains(String.valueOf(guessedChar))) {
                 System.out.println(guessedChar + " is in the word!");
                 for (int i = 0; i < word.length(); i++) {
                     if (word.charAt(i) == guessedChar) {
                         guessedWord[i] = guessedChar; 
                     }
+                }
+                // Check if the word is fully guessed
+                if (new String(guessedWord).equals(word)) {
+                    isGameWon = true;
                 }
             } else {
                 System.out.println(guessedChar + " is not in the word.");
@@ -55,7 +65,10 @@ public class WordGuess implements Game {
             }
         } else if (guess.equals(word)) {
             isGameWon = true;
-            guessedWord = word.toCharArray();
+            // Update the contents of guessedWord without reassigning it
+            for (int i = 0; i < word.length(); i++) {
+                guessedWord[i] = word.charAt(i);
+            }
         } else {
             System.out.println("Wrong guess!");
             attemptsLeft--;
@@ -63,6 +76,7 @@ public class WordGuess implements Game {
     }
 
     // Checks if the game is over
+    @Override
     public boolean isGameOver() {
         boolean noAttemptsLeft = attemptsLeft == 0;
         boolean wordFullyGuessed = new String(guessedWord).equals(word);
@@ -71,6 +85,7 @@ public class WordGuess implements Game {
     }
 
 
+    @Override
     public void endGame() {
         if (isGameWon || new String(guessedWord).equals(word)) {
             System.out.println("Congratulations! You guessed the word: " + word);
@@ -79,18 +94,23 @@ public class WordGuess implements Game {
         }
     }
 
+    @Override
     public void playGame() {
+        try (Scanner input = new Scanner(System.in)) {  // Create a single Scanner instance
         startGame();
-        while (!isGameOver()) {
-            takeTurn();
-            printBoard();
+            while (!isGameOver()) {
+                takeTurn(input);  // Pass the Scanner
+                printBoard();
         }
         endGame();
     }
+}
+
 
     // Main method to run the game
     public static void main(String[] args) {
         WordGuess game = new WordGuess();
-        game.playGame();
+        game.playGame();  // Start the game
     }
+    
 }
