@@ -1,32 +1,46 @@
 package csc223.eh;
 
-
-// Simple Linear Queue Implementation (No Circular Logic)
+// ArrayQueue class implements the Queue inteface
 public class ArrayQueue implements Queue {
-    private int[] array;
-    private int front;
-    private int back;
-    private int len;
-    private int count;
+
+    // Declare the array to store the queue elements
+    protected int[] array;
+
+    // Declare the front and back pointers
+    protected int front;
+    protected int back;
+
+    protected int len;
+    protected int count;
 
     public ArrayQueue(int size) {
-        array = new int[size];
-        front = 0;
-        back = -1;
-        len = size;
-        count = 0;
+
+        // Initialize the queue
+        this.array = new int[size];
+        
+        // Initialize the front and back pointers
+        this.front = 0;
+        // Initialize back pointer to -1 since the queue is empty
+        this.back = -1;
+
+        // Initalize the size of the queue
+        this.len = size;
+
+        // Initialize the count of elements in the queue
+        this.count = 0;
     }
 
+    @Override
     public void enqueue(int item) {
         if (count == len) {
             throw new IllegalStateException("Queue is Full");
         }
-
         back++;
         array[back] = item;
         count++;
     }
 
+    @Override
     public int dequeue() {
         if (isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("Queue is Empty");
@@ -43,6 +57,7 @@ public class ArrayQueue implements Queue {
         return item;
     }
 
+    @Override
     public int peek() {
         if (isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("Queue is Empty");
@@ -50,10 +65,12 @@ public class ArrayQueue implements Queue {
         return array[front];
     }
 
+    @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    @Override
     public int size() {
         return count;
     }

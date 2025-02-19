@@ -6,7 +6,7 @@ plugins {
 
 allprojects {
     repositories {
-        mavenCentral() // ✅ Required to fetch dependencies
+        mavenCentral() 
     }
 }
 

@@ -2,12 +2,16 @@ package csc223.eh;
 
 public class SinglyLinkedList implements LinkedList {
 
-    protected Node head;
-    protected int size;
+    // Protected access modifier is used to restrict the access of a class, constructor, data member and method in another class.
+    // It can be accessed using inheritance.
+    protected Node head;  // Head of the Linked List
+    protected int size;   // Size of the Linked List
 
+    // Constructor
     public SinglyLinkedList() {
-        this.head = null;
-        this.size = 0;
+
+        this.head = null;   // Initialize the head to null
+        this.size = 0;    // Initialize the size to 0
     }
 
     @Override
@@ -26,6 +30,7 @@ public class SinglyLinkedList implements LinkedList {
                 // Iterate through the Linked List
                 current = current.next;
             }
+            // Update the next pointer of the last node
             current.next = newNode;
         }
         
@@ -43,18 +48,23 @@ public class SinglyLinkedList implements LinkedList {
 
         // Check if Node Exists
         if (head.data == item) {
+            // Update the head pointer
             head = head.next;
             size--;
             return;
         }
          
-        
+        // Traverse the Linked List
         Node current = head;
+        // Iterate through the Linked List
         while (current.next != null && current.next.data != item) {
+            // Iterate through the Linked List
             current = current.next;
         }
 
+        // Remove the Node  
         if (current.next != null) {
+            // Update the next pointer of the current node
             current.next = current.next.next;
             size--;
         }
@@ -64,13 +74,17 @@ public class SinglyLinkedList implements LinkedList {
 
     @Override
     public char getFirst() {
+        // Return the first element of the Linked List
         return (head != null) ? head.data : 'x';
     }
 
     @Override
     public char getLast() {
+        // Return the last element of the Linked List
         if (head == null) return 'x';
+        // Traverse the Linked List
         Node current = head;
+        // Iterate through the Linked List
         while (current.next != null) {
             current = current.next;
         }
@@ -79,8 +93,10 @@ public class SinglyLinkedList implements LinkedList {
 
     @Override
     public char get(int index) {
+        // Check if the index is out of bounds
         if (index < 0 || index >= size) return 'x';
         Node current = head;
+    
         for (int i = 0; i < index; i++) {
             current = current.next;
         }
@@ -120,7 +136,6 @@ public class SinglyLinkedList implements LinkedList {
 
     @Override
     public int indexOf(char item) {
-
         Node current = head;
         int index = 0;
         while (current!= null) {
@@ -139,7 +154,9 @@ public class SinglyLinkedList implements LinkedList {
         Node current = head;
         int index = 0;
         int lastIndex = -1;
+        //
         while (current != null) {
+            
             if (current.data == item) lastIndex = index;
             current = current.next;
             index++;
@@ -149,9 +166,10 @@ public class SinglyLinkedList implements LinkedList {
 
     @Override
     public void reverse() {
+        //
         Node prev = null;
         Node current = head;
-
+        //
         while (current != null) {
             Node next = current.next;
             current.next = prev;
@@ -163,8 +181,10 @@ public class SinglyLinkedList implements LinkedList {
 
     @Override
     public String toString() {
+        //
         StringBuilder sb = new StringBuilder();
         Node current = head;
+        // Go through the entire LinkedList
         while (current != null) {
             sb.append(current.data);
             current = current.next;
