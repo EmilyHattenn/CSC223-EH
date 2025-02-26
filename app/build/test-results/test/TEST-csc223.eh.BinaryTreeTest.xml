@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="csc223.eh.BinaryTreeTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-02-19T04:32:03" hostname="EMILY" time="0.068">
+  <properties/>
+  <testcase name="insertTest()" classname="csc223.eh.BinaryTreeTest" time="0.068"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
