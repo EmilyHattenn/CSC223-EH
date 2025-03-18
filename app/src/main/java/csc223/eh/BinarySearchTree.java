@@ -1,7 +1,9 @@
 package csc223.eh;
 
+
 public class BinarySearchTree  {
     
+    // Node class to represent each node in the BST
     public class Node {
         int value;
         Node left;
@@ -21,6 +23,9 @@ public class BinarySearchTree  {
         this.root = null;
     }
 
+
+
+    // Insert Method
     public void insert(int value) {
         /* Inserts a new element to the BST. 
         If the element is already in the BST, 
@@ -34,20 +39,20 @@ public class BinarySearchTree  {
 
         // Base Case
         if (curr == null) {
-            curr = new Node(value);
+            return new Node(value);
         }
 
         // Recursive Case
-        if (value < curr.value) {
+        if (value <= curr.value) {
             curr.left = insertHelper(value, curr.left);
-        } else if (value > curr.value) {
+        } else {
             curr.right = insertHelper(value, curr.right);
         } 
         return curr;
     }
 
 
-
+    // Delete Method
     public void delete(int value) {
         /* Deletes an element from the BST. 
         If the element is not found, 
@@ -72,7 +77,7 @@ public class BinarySearchTree  {
             curr.right = deleteHelper(value, curr.right);
         } else { 
 
-            // Node with 1 or more childeren
+            // Node with 1 or no childeren
             if (curr.left == null) {
                 return curr.right;
             } else if (curr.right == null) {
@@ -80,33 +85,23 @@ public class BinarySearchTree  {
             }
 
             // Node with 2 children
-            Node tempLeft = new Node(curr.left.value);
-            Node tempRight = new Node(curr.right.value);
-
-            // Find the minimum value in the right subtree
-            if (value < tempRight.value) {
-                curr.value = tempRight.value;
-                curr.right = deleteHelper(value, curr);
-            } else {
-                curr.value = tempRight.value;
-                curr.right = deleteHelper(value, curr);
-            }
-
-            // Find the maximum value in the left subtree
-            if (value > tempLeft.value) {
-                curr.value = tempLeft.value;
-                curr.left = deleteHelper(value, curr);
-            } else {
-                curr.value = tempLeft.value;
-                curr.left = deleteHelper(value, curr);
-            }
+            Node minNode = findMin(curr.right);
+            curr.value = minNode.value;
+            curr.right = deleteHelper(minNode.value, curr.right);
         
     }
     return curr;
 }
     
+    private Node findMin(Node node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
 
 
+    // Search Method
     public boolean search(int value) {
         /* Returns true if the BST contains the specified element, 
         and false otherwise.*/
@@ -124,7 +119,7 @@ public class BinarySearchTree  {
         }
 
         // Recursive Case
-        if (value == curr.value) {
+        if (curr.value == value) {
             return true;
         } else if (value < curr.value) {
             return searchHelper(value, curr.left);
@@ -135,36 +130,44 @@ public class BinarySearchTree  {
 
 
 
+
+    // Update Method
     public Node update(int oldValue, int newValue) {
         /* Updates an element in the BST. If the element 
         is not in the BST, the method should do nothing.*/
 
         // If the Tree is Empty
-        root = updateHelper(oldValue, newValue, root);
+        updateHelper(oldValue, newValue, root);
         return root;
     }
 
-    private Node updateHelper(int oldValue, int newValue, Node node) {
+    private boolean updateHelper(int oldValue, int newValue, Node node) {
         /* Helper method to update an element in the BST. */
 
         // Base Case 
         if (node == null) {
-            return null;
+            return false;
         }
 
         // Recursive Case
-         // Delete the old value
-         node = deleteHelper(oldValue, node);
+        if (node.value == oldValue) {
+            if ((node.left == null || node.left.value < newValue) && (node.right == null || node.right.value > newValue)){
+                node.value = newValue;
+                return true;
+            } 
+            return false;
+        }
 
-         // Insert the new value
-         node = insertHelper(newValue, node);
- 
-         return node;
-
+        if (oldValue < node.value) {
+            return updateHelper(oldValue, newValue, node.left);
+        } else {
+            return updateHelper(oldValue, newValue, node.right);
+        }
     }
 
 
 
+    // Traversal Method (inOrder)
     public String inOrder() {
         /* Returns a string representation of all elements in the 
         BST in-order traversal. */
@@ -185,12 +188,15 @@ public class BinarySearchTree  {
     }
 
 
-
+    // Sorted Array to BST Method
     public Node sortedArrayToBST(int[] values) {
         /*Creates a height-balanced BST from a sorted array of integers. 
         The method should return the root of the BST. */
 
-        return sortedArrayToBSTHelper(values, 0, values.length - 1);
+        if (values == null || values.length == 0) return null;
+        root = sortedArrayToBSTHelper(values, 0, values.length - 1);
+        return root;
+
 
     }
 
@@ -235,13 +241,13 @@ public class BinarySearchTree  {
         // Recursive Case
         if (node.value > p && node.value > q) {
             return lowestCommonAncestorHelper(node.left, p, q);
-        } else if (node.value < p && node.value < q) {
+        }
+        if (node.value < p && node.value < q) {
             return lowestCommonAncestorHelper(node.right, p, q);
         }
         return node;
         
     }
-
 
 
 }
