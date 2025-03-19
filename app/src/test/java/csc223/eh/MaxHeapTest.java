@@ -1,18 +1,22 @@
 package csc223.eh;
 
 import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MaxHeapTest {
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MaxHeap maxHeap = new MaxHeap();
     }
 
 
     @Test
-    void testInsert() {
+    public void testInsert() {
         maxHeap.insert(5);
         maxHeap.insert(3);
         maxHeap.insert(7);
@@ -27,7 +31,21 @@ public class MaxHeapTest {
     }
 
     @Test 
-    void testDelete() {
+    public void testInsertandPeek() {
+        // Test 1
+        maxHeap.insert('B');
+        maxHeap.insert('A');
+        maxHeap.insert('C');
+
+        assertEquals('C', maxHeap.peek());
+
+        // Test 2
+
+    }
+
+    @Test 
+    public void testDelete() {
+        // Test 1
         maxHeap.insert(5);
         maxHeap.insert(3);
         maxHeap.insert(7);
@@ -40,26 +58,28 @@ public class MaxHeapTest {
         assertEquals("6, 5, 4, 2, 3", results);
         assertEquals(5, maxHeap.size());
 
+        // Test 2
+
     }
 
     @Test 
-    void testPeek() {
+    public void testPeek() {
         
 
     }
 
     @Test
-    void testSize() {
+    public void testSize() {
 
     }
 
     @Test 
-    void testIsEmpty() {
+    public void testIsEmpty() {
 
     }
 
     @Test 
-    void testToString() {
+    public void testToString() {
 
     }
     

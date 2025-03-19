@@ -1,44 +1,68 @@
 package csc223.eh;
 
 import org.junit.jupiter.api.BeforeEach;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MinHeapTest {
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         MinHeap minHeap = new MinHeap();
     }
     
     
     @Test
-    void testInsert() {
+    public void testInsert() {
 
     }
 
     @Test 
-    void testDelete() {
+    public void testInsertandPeek() {
+        minHeap.insert('B');
+
+        minHeap.insert('A');
+
+        minHeap.insert('C');
+
+        assertEquals('A', minHeap.peek());
+    }
+
+    @Test 
+    public void testDelete() {
+        minHeap.insert('D');
+
+        minHeap.insert('B');
+
+        minHeap.insert('A');
+
+        minHeap.delete();
+
+        assertNotEquals('A', minHeap.peek());
 
     }
 
     @Test 
-    void testPeek() {
+    public void testPeek() {
 
     }
 
     @Test
-    void testSize() {
+    public void testSize() {
 
     }
 
     @Test 
-    void testIsEmpty() {
+    public void testIsEmpty() {
 
     }
 
     @Test 
-    void testToString() {
+    public void testToString() {
 
     }
     

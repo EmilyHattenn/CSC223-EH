@@ -1,9 +1,9 @@
 package csc223.eh;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 public class BinarySearchTreeTest {
 
@@ -15,7 +15,7 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    void testInsertAndSearch() {
+    public void testInsertAndSearch() {
 
         // Test insert and search functionality
         bst.insert(50);
@@ -40,23 +40,35 @@ public class BinarySearchTreeTest {
 
 
     @Test
-    void testDelete() {
-
-        // Test deleting a leaf node
+    public void testDelete() {
         bst.insert(10);
         bst.insert(5);
         bst.insert(15);
         bst.insert(3);
+        bst.insert(7);
+        bst.insert(12);
+        bst.insert(18);
 
-        bst.delete(3); // Deleting leaf node
+        System.out.println("\n=== BEFORE DELETE ===");
+        System.out.println(bst.inOrder()); // Print tree before deletion
+
+        System.out.println("\n=== DELETE NODE 3 (Leaf) ===");
+        bst.delete(3);
         assertFalse(bst.search(3));
-        assertTrue(bst.search(10));
+
+        System.out.println("\n=== DELETE NODE 10 (Root with Two Children) ===");
+        bst.delete(10);
+        assertFalse(bst.search(10));
+
+        System.out.println("\n=== AFTER DELETE ===");
+        System.out.println(bst.inOrder()); // Print tree after deletion
     }
 
 
 
+
     @Test
-    void testUpdate() {
+    public void testUpdate() {
     
         
         // Insert elements
@@ -80,7 +92,7 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    void testInOrder() {
+    public void testInOrder() {
       
         // Insert elements
         bst.insert(50);
@@ -96,24 +108,31 @@ public class BinarySearchTreeTest {
     }
 
     @Test
-    void testSortedArrayToBST() {
-    
-
-        // Test sorted array to BST conversion
+    public void testSortedArrayToBST() {
         int[] sortedArray = {20, 30, 40, 50, 60, 70, 80};
-        BinarySearchTree.Node root = bst.sortedArrayToBST(sortedArray);
+        BSTNode root = bst.sortedArrayToBST(sortedArray);
+        bst.setRoot(root);
+        
 
-        // Root should be middle element
-        assertEquals(50, root.value);
+
+        // Root should be the middle element
+        assertEquals(50, root.data);
 
         // Check left and right children
-        assertEquals(70, root.left.value);
-        assertEquals(60, root.right.value);
+        assertEquals(30, root.left.data);
+        assertEquals(70, root.right.data);
+
+        // Check further left and right children
+        assertEquals(20, root.left.left.data);
+        assertEquals(40, root.left.right.data);
+        assertEquals(60, root.right.left.data);
+        assertEquals(80, root.right.right.data);
     }
 
+
     @Test
-    void testLowestCommonAncestor() {
-    
+    public void testLowestCommonAncestor() {
+
 
         bst.insert(5);
         bst.insert(3);
@@ -123,7 +142,7 @@ public class BinarySearchTreeTest {
         bst.insert(6);
         bst.insert(8);
 
-        assertEquals(5, bst.lowestCommonAncestor(2, 8).value);
-        assertEquals(3, bst.lowestCommonAncestor(2, 4).value);
+        assertEquals(5, bst.lowestCommonAncestor(2, 8));
+        assertEquals(3, bst.lowestCommonAncestor(2, 4));
     }
 }
