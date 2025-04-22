@@ -2,6 +2,8 @@ package csc223.eh;
 
 public class SinglyLinkedList implements LinkedList {
 
+    
+
     // Protected access modifier is used to restrict the access of a class, constructor, data member and method in another class.
     // It can be accessed using inheritance.
     protected Node head;  // Head of the Linked List
