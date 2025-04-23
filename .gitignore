@@ -13,4 +13,16 @@
 *.js
 *.properties
 *.toml
-
+*.json
+*.jar
+*.MF
+*.kts
+app/build/*
+app/app/*
+build/*
+build.gradle
+gradle/*
+gradlew.bat
+gradlew
+settings.gradle
+\.gradle/*
