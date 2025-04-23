@@ -1,21 +1,16 @@
 package csc223.eh;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.Test;
 
 
 public class BinarySearchTreeTest {
 
-    private BinarySearchTree bst;
-
-    @BeforeEach
-    void setUp() {
-        bst = new BinarySearchTree();
-    }
-
     @Test
     public void testInsertAndSearch() {
+        BinarySearchTree bst = new BinarySearchTree();
 
         // Test insert and search functionality
         bst.insert(50);
@@ -41,34 +36,32 @@ public class BinarySearchTreeTest {
 
     @Test
     public void testDelete() {
-        bst.insert(10);
-        bst.insert(5);
-        bst.insert(15);
-        bst.insert(3);
-        bst.insert(7);
-        bst.insert(12);
-        bst.insert(18);
+        BinarySearchTree bst = new BinarySearchTree();
+        bst.insert(50);
+        bst.insert(30);
+        bst.insert(70);
+        bst.insert(20);
+        bst.insert(40);
+        bst.insert(60);
+        bst.insert(80);
 
-        System.out.println("\n=== BEFORE DELETE ===");
-        System.out.println(bst.inOrder()); // Print tree before deletion
+        assertEquals("20 30 40 50 60 70 80", bst.inOrder());
 
-        System.out.println("\n=== DELETE NODE 3 (Leaf) ===");
-        bst.delete(3);
-        assertFalse(bst.search(3));
+        bst.delete(50); // root with two children
+        assertEquals("20 30 40 60 70 80", bst.inOrder());
 
-        System.out.println("\n=== DELETE NODE 10 (Root with Two Children) ===");
-        bst.delete(10);
-        assertFalse(bst.search(10));
-
-        System.out.println("\n=== AFTER DELETE ===");
-        System.out.println(bst.inOrder()); // Print tree after deletion
+        bst.delete(80); // leaf
+        assertEquals("20 30 40 60 70", bst.inOrder());
     }
+
+    
 
 
 
 
     @Test
     public void testUpdate() {
+        BinarySearchTree bst = new BinarySearchTree();
     
         
         // Insert elements
@@ -79,20 +72,28 @@ public class BinarySearchTreeTest {
         bst.insert(40);
         bst.insert(60);
         bst.insert(80);
+        assertEquals("20 30 40 50 60 70 80", bst.inOrder());
 
-        // Update existing node
         bst.update(40, 35);
-        assertFalse(bst.search(40));
-        assertTrue(bst.search(35));
+        assertEquals("20 30 35 50 60 70 80", bst.inOrder());
+        
+        bst.update(50,30);
+        assertEquals("20 30  30 35 60 70 80", bst.inOrder());
+        
+        bst.update(20,21);
+        assertEquals("21 30 30 35 60 70 80", bst.inOrder());
 
-        // Attempt to update non-existing node
-        bst.update(100, 90);
-        assertFalse(bst.search(90));
+
+        bst.update(970, 1467);
+        assertEquals("21 30 30 35 60 70 80", bst.inOrder());
+    
+
 
     }
 
     @Test
     public void testInOrder() {
+        BinarySearchTree bst = new BinarySearchTree();
       
         // Insert elements
         bst.insert(50);
@@ -109,30 +110,18 @@ public class BinarySearchTreeTest {
 
     @Test
     public void testSortedArrayToBST() {
-        int[] sortedArray = {20, 30, 40, 50, 60, 70, 80};
-        BSTNode root = bst.sortedArrayToBST(sortedArray);
-        bst.setRoot(root);
-        
+        BinarySearchTree bst = new BinarySearchTree();
+        int[] nums = {-10, -3, 0, 5, 9};
+        assertEquals(0, bst.sortedArrayToBST(nums));
+        assertEquals("-10 -3 0 5 9", bst.inOrder());
 
-
-        // Root should be the middle element
-        assertEquals(50, root.data);
-
-        // Check left and right children
-        assertEquals(30, root.left.data);
-        assertEquals(70, root.right.data);
-
-        // Check further left and right children
-        assertEquals(20, root.left.left.data);
-        assertEquals(40, root.left.right.data);
-        assertEquals(60, root.right.left.data);
-        assertEquals(80, root.right.right.data);
     }
 
 
     @Test
     public void testLowestCommonAncestor() {
 
+        BinarySearchTree bst = new BinarySearchTree();
 
         bst.insert(5);
         bst.insert(3);

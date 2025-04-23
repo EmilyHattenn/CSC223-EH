@@ -44,7 +44,7 @@ public interface Graph {
     /**
      * Prints the graph representation.
      */
-    void printGraph();
+    String printGraph();
     
     /**
      * Finds the shortest path between two vertices.

@@ -1,9 +1,9 @@
 package csc223.eh;
 
 public class BSTNode {
-    int data;
-    BSTNode left;
-    BSTNode right;
+    public BSTNode left;
+    public BSTNode right;
+    public int data;
 
     public BSTNode(int data) {
         this.data = data;

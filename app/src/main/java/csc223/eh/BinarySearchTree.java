@@ -1,14 +1,11 @@
 package csc223.eh;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class BinarySearchTree {
-    
-    public class BSTNode {
-        int data;
-        BSTNode left;
-        BSTNode right;
+
+    public static class BSTNode {
+        public BSTNode left;
+        public BSTNode right;
+        public int data;
     
         public BSTNode(int data) {
             this.data = data;
@@ -16,175 +13,136 @@ public class BinarySearchTree {
             this.right = null;
         }
     }
-    
-    // Root of the BST
-    private BSTNode root;
 
-    // Trying instead of construtor
+    BSTNode root; // Root of the BST
+
+    // Constructor
     public BinarySearchTree() {
-        this.root = null;
-    }
-    
-    // Manually updates the root node
-    public void setRoot(BSTNode root) {
-        this.root = root;
+
     }
     
 
-
-    // Insert Method
- 
+    // Insert Method: Inserts a new element to the BST. If the element is already in the BST, it should not be added again.
     public void insert(int value) {
-        /* Inserts a new element to the BST. 
-        If the element is already in the BST, 
-        it should not be added again. */ 
-
-        root = insertHelper(value, this.root);
+        root = insertHelper(value, root);
     }
 
     private BSTNode insertHelper(int value, BSTNode curr) {
-        /* Helper method to insert a new element to the BST. */
-
-        // Base Case
         if (curr == null) {
             return new BSTNode(value);
         }
-
-        // Recursive Case
-        if (value <= curr.data) {
+    
+        if (value < curr.data) {
             curr.left = insertHelper(value, curr.left);
-        } else if (value > curr.data){
+        } else if (value > curr.data) {
             curr.right = insertHelper(value, curr.right);
-        } 
+        }
+        // Skip if value == curr.data
         return curr;
     }
+    
 
 
-    // Delete Method
-
+    // Delete Method: Deletes an element from the BST. If the element is not found, it should not be deleted.
     public void delete(int value) {
-        /* Deletes an element from the BST. 
-           If the element is not found, 
-           it should not be deleted. */
-
-        
-        System.out.println("\nDeleting: " + value); // Debugging
-
         root = deleteHelper(root, value);
     }
     
     private BSTNode deleteHelper(BSTNode curr, int value) {
-        // Base Case: If tree is empty or node not found
         if (curr == null) {
-            System.out.println("Node not found!"); // Debugging
             return null;
         }
-        
-        System.out.println("Visiting Node: " + curr.data); // Debugging
-
-        // Recursive Case: Traverse left or right
+    
         if (value < curr.data) {
-            System.out.println("Going left from " + curr.data); // Debugging
             curr.left = deleteHelper(curr.left, value);
         } else if (value > curr.data) {
-            System.out.println("Going right from " + curr.data); // Debugging
             curr.right = deleteHelper(curr.right, value);
         } else {
-
-            System.out.println("Found node to delete: " + curr.data); // Debgging
-
-            // Case 1: Node has one child or no children
-            if (curr.left == null) {
-                System.out.println("Node has no left child. Replacing with right child.");
-                return curr.right; // Replace node with right child
+            // Node to be deleted found
+    
+            // Case 1: One or no child
+            if (curr.left == null) return curr.right;
+            if (curr.right == null) return curr.left;
+    
+            // Case 2: Two children – find min in right subtree
+            BSTNode successor = curr.right;
+            while (successor.left != null) {
+                successor = successor.left;
             }
-            if (curr.right == null) {
-                System.out.println("Node has no right child. Replacing with left child.");
-                return curr.left; // Replace node with left child
-            }
+            int min = successor.data;
     
-            // Case 2: Node has two children
-            System.out.println("Node has two children. Finding inorder successor.");
-            // Find inorder successor (smallest value in right subtree)
-            curr.data = minValue(curr.right);
-            System.out.println("Inorder Successor: " + curr.data);
-            
-            // Delete the inorder successor
-            curr.right = deleteHelper(curr.right, curr.data);
+            curr.data = min;
+    
+            curr.right = deleteHelper(curr.right, min);
         }
-        return curr; // Return the updated node
-    }
     
-    /** Finds the minimum value in the subtree */
-    private int minValue(BSTNode node) {
-        while (node.left != null) {
-            node = node.left;
-        }
-        return node.data;
+        return curr;
     }
-    
     
 
     // Search Method
- 
     public boolean search(int value) {
         /* Returns true if the BST contains the specified element, 
         and false otherwise.*/
 
-       return searchHelper(value, new LinkedList<>());
+       return searchHelper(value, root);
     }
 
-    private boolean searchHelper(int value, Queue<BSTNode> queue) {
+    private boolean searchHelper(int value, BSTNode curr) {
         /* Helper method to search for an element in the BST. */
 
-        if (root == null) {
-            return false;
-        }
-        // Initialize queue only on first call
-        if (queue.isEmpty()) {
-            queue.add(root);
-        }
-        
-         // Base case: No nodes left to process
-        if (queue.isEmpty()){
-            return false;
-        }
-
-        // Recursive Case
-        BSTNode curr = queue.poll();
+        // Base Case
         if (curr.data == value) {
             return true;
         }
-
-        if (curr.left!= null) {
-            queue.add(curr.left);
+        
+        // Recursive Case
+        if (value < curr.data && curr.left != null) {
+            if (searchHelper(value, curr.left)) {
+                return true;
+            }
+        } else if (value > curr.data && curr.right != null) {
+            if (searchHelper(value, curr.right)) {
+                return true;
+            }
         }
-        if (curr.right != null) {
-            queue.add(curr.right);
-        }
 
-        // Recursive call with updated queue
-        return searchHelper(value, queue);
+        return false;
     } 
-    
-
 
 
     // Update Method
-
     public void update(int oldValue, int newValue) {
         /* Updates an element in the BST. If the element 
         is not in the BST, the method should do nothing.*/
-        if (!search(oldValue)) return; // Ensure oldValue exists
-
-        delete(oldValue);
-        insert(newValue);
+        updateHelper(oldValue, newValue, root);
     }
 
+    private boolean updateHelper(int oldValue, int newValue, BSTNode curr) {
+        
+        // Base Case
+        if (root.data == oldValue) {
+            root.data = newValue;
+            return true;
+        }
 
+        // Recursive Case
+        if (curr.data == oldValue) {
+            return true;
+        }
+            if (oldValue < curr.data && curr.left != null) {
+                if (updateHelper(oldValue, newValue, curr.left)){
+                    curr.left.data = newValue;
+                }
+            } else if (oldValue > curr.data && curr.right != null) {
+                if (updateHelper(oldValue, newValue, curr.right)) {
+                    curr.right.data = newValue;
+                }
+            }
+            return false;
+    }
 
     // Traversal Method (inOrder)
-
     public String inOrder() {
         /* Returns a string representation of all elements in the 
         BST in-order traversal. */
@@ -208,35 +166,31 @@ public class BinarySearchTree {
 
 
     // Sorted Array to BST Method
-    public BSTNode sortedArrayToBST(int[] values) {
+    public int sortedArrayToBST(int[] values) {
         /*Creates a height-balanced BST from a sorted array of integers. 
         The method should return the root of the BST. */
         
-        root = sortedArrayToBSTHelper(values, 0, values.length -1);
-        return root;
+        root = null;
+        sortedArrayToBSTHelper(values, 0, values.length -1);
+        return root.data;
 
     }
 
-    private BSTNode sortedArrayToBSTHelper(int[] values, int left, int right) {
+    private void sortedArrayToBSTHelper(int[] values, int left, int right) {
         /* Helper method to create a height-balanced BST from a sorted array. */
 
         // Base Case 
         if (left > right) {
-            return null;
+            return;
         }
 
         // Recursive Case
 
-        int mid = left + (right - left) / 2;
-        BSTNode node = new BSTNode(values[mid]);
-
-        System.out.println("Creating Node: " + node.data + " (Mid: " + mid + ")"); // Debugging
-
-
-        node.left = sortedArrayToBSTHelper(values, left, mid - 1);
-        node.right = sortedArrayToBSTHelper(values, mid + 1, right);
-
-        return node;
+        int mid = (right + left) / 2;
+       
+        insert(values[mid]);
+        sortedArrayToBSTHelper(values, left, mid - 1);
+        sortedArrayToBSTHelper(values, mid + 1, right);
     }
 
 
